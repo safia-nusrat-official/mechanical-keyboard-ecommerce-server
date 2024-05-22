@@ -35,6 +35,14 @@ const createProduct = async (req: Request, res: Response) => {
 const getAllProducts = async (req: Request, res: Response) => {
   try {
     const result = await productServices.getAllProducts();
+    if(!result.length){
+    res.status(200).send({
+      success: true,
+      message: 'Products fetched successfully! Although there is no product in the database currently.',
+      data: result,
+    });
+      return
+    }
     res.status(200).send({
       success: true,
       message: 'Products fetched successfully!',
@@ -49,7 +57,14 @@ const getProductById = async (req: Request, res: Response) => {
   try {
     const id = req.params.productId;
     const result = await productServices.getProductById(id);
-    console.log(result);
+    if(!result){
+      res.status(400).send({
+        success: false,
+        message: 'Either the product has been removed or it never existed',
+        data: result,
+      });
+      return
+    }
     res.status(200).send({
       success: true,
       message: 'Product fetched successfully!',
@@ -59,7 +74,7 @@ const getProductById = async (req: Request, res: Response) => {
     console.log(error);
     res.status(500).send({
       success: false,
-      message: error.reason ? `Product doesnot exist` : 'Failed to fetch product',
+      message: error.reason ? `Invalid product Id!` : 'Failed to fetch product',
     });
   }
 };
@@ -101,9 +116,30 @@ const updateProductInfo = async (req:Request, res:Response) => {
     });
   }
 }
+
+const deleteProduct = async(req:Request, res:Response) => {
+  try {
+    const productId = req.params.productId
+    const result = await productServices.deleteAProduct(productId)
+
+    res.status(200).send({
+      success: true,
+      message: "Product deleted successfully!",
+      data: result.deletedCount ? null : result
+   })
+  } catch (error:any) {
+    console.log(error)
+    res.status(500).send({
+      success: false,
+      message: error.message||"Unexpected error",
+      error: error
+   })
+  }
+}
 export const productControllers = {
   createProduct,
   getAllProducts,
   getProductById,
+  deleteProduct,
   updateProductInfo
 };

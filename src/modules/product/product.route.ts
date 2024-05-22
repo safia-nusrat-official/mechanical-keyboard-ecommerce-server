@@ -11,5 +11,7 @@ productRoutes.get("/:productId", productControllers.getProductById)
 
 productRoutes.put("/:productId", productControllers.updateProductInfo)
 
+productRoutes.delete("/:productId", productControllers.deleteProduct)
+
 
 export default productRoutes
