@@ -9,5 +9,7 @@ productRoutes.get("/", productControllers.getAllProducts)
 
 productRoutes.get("/:productId", productControllers.getProductById)
 
+productRoutes.put("/:productId", productControllers.updateProductInfo)
+
 
 export default productRoutes

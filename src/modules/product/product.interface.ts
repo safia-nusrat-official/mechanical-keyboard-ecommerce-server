@@ -23,3 +23,23 @@ export interface TProduct {
 export interface TProductModel extends Model<TProduct> {
   doesProductExist(productName: string): Promise<TProduct | null>;
 }
+
+export type TUpdatedInventory = {
+  quantity?: number;
+  inStock?: boolean;
+};
+
+export type TUpdatedVariants = {
+  type?: string;
+  value?: string;
+};
+
+export interface TUpdatedProduct {
+  name?: string;
+  description?: string;
+  price?: number;
+  category?: string;
+  tags?: string[];
+  variants?: TUpdatedVariants[];
+  inventory?: TUpdatedInventory;
+} 

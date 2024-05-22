@@ -1,6 +1,8 @@
 import { Request, Response } from 'express';
 import { productServices } from './product.services';
-import { productValidation } from './product.validation';
+import { productValidation, updatedProductValidation } from './product.validation';
+import { TProduct, TUpdatedProduct } from './product.interface';
+import { ZodParsedType } from 'zod';
 
 const createProduct = async (req: Request, res: Response) => {
   try {
@@ -61,8 +63,47 @@ const getProductById = async (req: Request, res: Response) => {
     });
   }
 };
+
+const updateProductInfo = async (req:Request, res:Response) => {
+  try {
+    const newProductInfo:Partial<TProduct> = req.body
+    const productId = req.params.productId
+    const productInfoIsValid = updatedProductValidation.safeParse(newProductInfo)
+
+    if(!productInfoIsValid.success){
+      res.status(500).send({
+        success:false,
+        message:"Do not provide any property that doesnot exist on the original product.",
+      })
+      return 
+    }
+
+    if(!Object.keys(productInfoIsValid.data).length){
+      res.status(400).send({
+        success:false,
+        message:"There was nothing to update because you either provided an empty object or a property that doesnot exist in the original product."
+      })
+      return
+    }
+    const productInfo:TUpdatedProduct = productInfoIsValid.data ||newProductInfo
+    const result = await productServices.updateProductInfo(productId, productInfo)
+
+    res.status(200).send({
+      success:true,
+      message:"Product updated successfully!",
+      data:result
+    })
+  } catch (error:any) {
+    console.log(error);
+    res.status(500).send({
+      success: false,
+      message: error.reason ? `Invalid product id!` : 'Failed to upate product information.',
+    });
+  }
+}
 export const productControllers = {
   createProduct,
   getAllProducts,
   getProductById,
+  updateProductInfo
 };
