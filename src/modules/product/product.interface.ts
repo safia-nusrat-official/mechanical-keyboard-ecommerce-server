@@ -21,9 +21,16 @@ export interface TProduct {
 }
 
 export interface TProductModel extends Model<TProduct> {
-  doesProductExist(productName: string): Promise<TProduct | null>;
+  reduceQuantity(
+    orderedProductId: string,
+    orderedQuantity: number,
+    currentProductQuantity: number,
+  ): Promise<any>;
 }
 
+// export type TProductModel = Model<TProduct, {}, TProductMethods>
+
+// interfaces for product data to be updated
 export type TUpdatedInventory = {
   quantity?: number;
   inStock?: boolean;
@@ -42,4 +49,4 @@ export interface TUpdatedProduct {
   tags?: string[];
   variants?: TUpdatedVariants[];
   inventory?: TUpdatedInventory;
-} 
+}
