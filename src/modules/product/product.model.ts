@@ -14,6 +14,7 @@ const variantsSchema = new mongoose.Schema<TVariants>({
   type: String,
   value: String,
 });
+
 const productSchema = new mongoose.Schema<
   TProduct,
   TProductModel

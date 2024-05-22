@@ -2,18 +2,19 @@ import { TProduct, TUpdatedProduct } from './product.interface';
 import { Product } from './product.model';
 
 const insertProductIntoDB = async (product: TProduct) => {
-  const newProduct = new Product(product)
-  const result = await newProduct.save();
-  console.log(result)
+  const newProduct = new Product(product) // inserting a product in db by creating instance of Product Model
+  const result = await newProduct.save(); // triggers a pre-hook to check if any product with the same name as the product's already exists
   return result;
 };
 
 const getAllProducts = async (searchQuery?: string):Promise<Array<TProduct>> => {
   if (searchQuery) {
     const searchQueryRegex = new RegExp(`${searchQuery}`);
+
+    // using aggregation and regex to search for the provided query across the necessary fields
     const result = await Product.aggregate([
       {
-        $unwind:"$variants"
+        $unwind:"$variants" // destructuring the varaints array to operate on them separately
       },
       {
         $match: {
@@ -30,7 +31,7 @@ const getAllProducts = async (searchQuery?: string):Promise<Array<TProduct>> => 
     ]);
     return result;
   }
-  const result = await Product.find({});
+  const result = await Product.find({}); // returning all products if no search query is provided
   return result;
 };
 
@@ -43,22 +44,21 @@ const updateProductInfo = async (
   productId: string,
   productInfo: TUpdatedProduct,
 ) => {
-  const result = await Product.updateOne(
+  await Product.updateOne(
     { _id: productId },
     {
       $set: productInfo,
     },
   );
-  return getProductById(productId);
+  return getProductById(productId); // returning the product with updated field values
 };
 
 const deleteAProduct = async (productId: string) => {
   const productAlreadyDeleted = await getProductById(productId);
   if (!productAlreadyDeleted) {
-    throw new Error('Product has already been deleted before.');
+    throw new Error('Product has already been deleted.');
   }
   const result = await Product.deleteOne({ _id: productId });
-  console.log(result);
   return result;
 };
 

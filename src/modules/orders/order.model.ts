@@ -10,24 +10,26 @@ const orderSchema = new mongoose.Schema<TOrder, TOrderModel, TOrderMethods>({
   quantity: { type: Number },
 });
 
-// checks if the product that's being ordered exists in db with the given productId before the order is saved to db
 orderSchema.pre('save', async function (next) {
+  // this represents the order itself
   const productExists = (await productServices.getProductById(this.productId)) ?? false;
+  
+  // throws error if the product that's being ordered doesnot exists in db 
   if (!productExists) {
     throw new Error(
       `No product with the id ${this.productId} exists in Database.`,
     );
   }
 
-  console.log(`Ordered product's cr status before reducing`, productExists.inventory.inStock)
-
+  // throws an error if the ordered quantity exceeds the product's available quantity in inventory
   if (this.quantity > productExists.inventory.quantity) {
     throw new Error('Insufficient quantity available in inventory');
-  } else if (this.quantity === productExists.inventory.quantity) {
-    // use the reduceQuantity method on productExists and pass the orderedQuantity number
+  } 
+  
+  // uses the reduceQuantity static method on the Product model to reduce the number of ordered quantity from the ordered product's invetory's quantity and update the inStock status
+  else if (this.quantity === productExists.inventory.quantity) {
     await Product.reduceQuantity(this.productId, this.quantity, productExists.inventory.quantity)
-  } else {
-    await Product.reduceQuantity(this.productId, this.quantity, productExists.inventory.quantity)
+  } else {await Product.reduceQuantity(this.productId, this.quantity, productExists.inventory.quantity)
  }
   next();
 });

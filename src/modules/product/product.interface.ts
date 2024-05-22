@@ -28,8 +28,6 @@ export interface TProductModel extends Model<TProduct> {
   ): Promise<any>;
 }
 
-// export type TProductModel = Model<TProduct, {}, TProductMethods>
-
 // interfaces for product data to be updated
 export type TUpdatedInventory = {
   quantity?: number;

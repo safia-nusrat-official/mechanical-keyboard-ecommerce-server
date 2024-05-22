@@ -10,6 +10,7 @@ const createProduct = async (req: Request, res: Response) => {
   try {
     const productData = req.body;
     const value = productValidation.safeParse(productData);
+
     // validating productData format
     if (!value.success) {
       return res.status(500).send({
@@ -38,6 +39,7 @@ const createProduct = async (req: Request, res: Response) => {
 const getAllProducts = async (req: Request, res: Response) => {
   try {
     const searchTerm = req.query?.searchTerm;
+    // conditional logic to return product with specified search term if it's provided
     if (searchTerm) {
       const result = await productServices.getAllProducts(
         searchTerm.toString(),
@@ -53,10 +55,12 @@ const getAllProducts = async (req: Request, res: Response) => {
           success: true,
           message: `Products matching search term ${searchTerm} fetched successfully!`,
           data: result,
-        }); 
+        });
       }
     } else {
+      // returning all products from database if no search term has been provided
       const result = await productServices.getAllProducts();
+
       if (!result.length) {
         res.status(200).send({
           success: true,
@@ -72,8 +76,11 @@ const getAllProducts = async (req: Request, res: Response) => {
         data: result,
       });
     }
-  } catch (error) {
-    console.log(error);
+  } catch (error: any) {
+    res.status(500).send({
+      success: false,
+      message: error.message || 'Unexpected error.',
+    });
   }
 };
 
@@ -81,6 +88,8 @@ const getProductById = async (req: Request, res: Response) => {
   try {
     const id = req.params.productId;
     const result = await productServices.getProductById(id);
+
+    // checking if product really exists or has been removed from db
     if (!result) {
       res.status(400).send({
         success: false,
@@ -95,10 +104,11 @@ const getProductById = async (req: Request, res: Response) => {
       data: result,
     });
   } catch (error: any) {
-    console.log(error);
     res.status(500).send({
       success: false,
-      message: error.reason ? `Invalid product Id!` : 'Failed to fetch product',
+      message: error?.reason
+        ? `Invalid product Id!`
+        : 'Failed to fetch product',
     });
   }
 };
@@ -110,6 +120,7 @@ const updateProductInfo = async (req: Request, res: Response) => {
     const productInfoIsValid =
       updatedProductValidation.safeParse(newProductInfo);
 
+    // if clients sends a property to update which is not configured in the model
     if (!productInfoIsValid.success) {
       res.status(500).send({
         success: false,
@@ -119,6 +130,7 @@ const updateProductInfo = async (req: Request, res: Response) => {
       return;
     }
 
+    // if client sends an empty object to update
     if (!Object.keys(productInfoIsValid.data).length) {
       res.status(400).send({
         success: false,
@@ -140,7 +152,6 @@ const updateProductInfo = async (req: Request, res: Response) => {
       data: result,
     });
   } catch (error: any) {
-    console.log(error);
     res.status(500).send({
       success: false,
       message: error.reason
@@ -161,11 +172,9 @@ const deleteProduct = async (req: Request, res: Response) => {
       data: result.deletedCount ? null : result,
     });
   } catch (error: any) {
-    console.log(error);
     res.status(500).send({
       success: false,
-      message: error.message || 'Unexpected error',
-      error: error,
+      message: error.name === 'CastError' ? 'Invalid Id!' : 'Unexpected error',
     });
   }
 };

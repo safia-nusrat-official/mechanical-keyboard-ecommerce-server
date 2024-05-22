@@ -6,6 +6,10 @@ const insertOrderintoDB = async (order: TOrder) => {
   return result;
 };
 const getAllOrdersFromDB = async (searchEmail?: string) => {
+  if (searchEmail) {
+    const result = await Order.find({ email: searchEmail });
+    return result;
+  }
   const result = await Order.find({});
   return result;
 };
