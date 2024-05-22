@@ -7,5 +7,7 @@ productRoutes.post("/", productControllers.createProduct)
 
 productRoutes.get("/", productControllers.getAllProducts)
 
+productRoutes.get("/:productId", productControllers.getProductById)
+
 
 export default productRoutes

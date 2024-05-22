@@ -15,4 +15,9 @@ const getAllProducts = async() => {
   return result
 } 
 
-export const productServices = { insertProductIntoDB, getAllProducts };
+const getProductById = async(productId:string) => {
+    const result = await Product.findById(productId)
+    return result
+}
+
+export const productServices = { insertProductIntoDB, getAllProducts, getProductById };
