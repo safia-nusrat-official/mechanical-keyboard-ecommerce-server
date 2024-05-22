@@ -10,4 +10,9 @@ const insertProductIntoDB = async (product: TProduct) => {
   return result;
 };
 
-export const productServices = { insertProductIntoDB };
+const getAllProducts = async() => {
+  const result = await Product.find({})
+  return result
+} 
+
+export const productServices = { insertProductIntoDB, getAllProducts };

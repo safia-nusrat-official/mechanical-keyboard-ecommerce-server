@@ -16,7 +16,7 @@ const createProduct = async (req: Request, res: Response) => {
       const result = await productServices.insertProductIntoDB(value.data);
       res.status(200).send({
         success: true,
-        msg: 'Product created successfully',
+        msg: 'Product created successfully!',
         data: result,
       });
     }
@@ -28,6 +28,19 @@ const createProduct = async (req: Request, res: Response) => {
   }
 };
 
+const getAllProducts = async(req:Request, res:Response) => {
+  try {
+    const result = await productServices.getAllProducts()
+    res.status(200).send({
+      success:true,
+      message:"Products fetched successfully!",
+      data:result
+    })
+  } catch (error) {
+    console.log(error)
+  }
+}
 export const productControllers = {
   createProduct,
+  getAllProducts
 };
