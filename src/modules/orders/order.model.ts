@@ -25,9 +25,9 @@ orderSchema.pre('save', async function (next) {
     throw new Error('Insufficient quantity available in inventory');
   } else if (this.quantity === productExists.inventory.quantity) {
     // use the reduceQuantity method on productExists and pass the orderedQuantity number
-    const result = await Product.reduceQuantity(this.productId, this.quantity, productExists.inventory.quantity)
+    await Product.reduceQuantity(this.productId, this.quantity, productExists.inventory.quantity)
   } else {
-    const result = await Product.reduceQuantity(this.productId, this.quantity, productExists.inventory.quantity)
+    await Product.reduceQuantity(this.productId, this.quantity, productExists.inventory.quantity)
  }
   next();
 });
