@@ -174,7 +174,7 @@ const deleteProduct = async (req: Request, res: Response) => {
   } catch (error: any) {
     res.status(500).send({
       success: false,
-      message: error.name === 'CastError' ? 'Invalid Id!' : 'Unexpected error',
+      message: error.name === 'CastError' ? 'Invalid Id!' : error.message || 'Unexpected error',
     });
   }
 };
