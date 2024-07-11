@@ -1,18 +1,20 @@
 import mongoose from 'mongoose';
-import {
-  TProduct,
-  TProductModel,
-} from './product.interface';
+import { TProduct, TProductModel } from './product.interface';
 
-const productSchema = new mongoose.Schema<TProduct, TProductModel>({
-  title: { type: String, required: true },
-  description: { type: String, required: true },
-  price: { type: Number, required: true },
-  rating: { type: Number, required: true },
-  image: { type: String, required: true },
-  brand: { type: String, required: true },
-  availableQuantity: { type: Number, required: true },
-});
+const productSchema = new mongoose.Schema<TProduct, TProductModel>(
+  {
+    title: { type: String, required: true },
+    description: { type: String, required: true },
+    price: { type: Number, required: true },
+    rating: { type: Number, required: true },
+    image: { type: String, required: true },
+    brand: { type: String, required: true },
+    availableQuantity: { type: Number, required: true },
+  },
+  {
+    timestamps: true,
+  },
+);
 
 // Makes sure the product doesnot exist in the db already before a product is inserted.
 productSchema.pre('save', async function (next) {
@@ -32,7 +34,7 @@ productSchema.statics.reduceQuantity = async function (
     orderedProductId,
     {
       $inc: {
-        'availableQuantity': -orderedQuantity,
+        availableQuantity: -orderedQuantity,
       },
     },
   );

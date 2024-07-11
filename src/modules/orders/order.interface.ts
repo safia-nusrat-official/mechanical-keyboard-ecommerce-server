@@ -2,7 +2,7 @@ import { Model, Types } from 'mongoose';
 
 export interface TOrder {
   date: string;
-  paymentMethod: string;
+  paymentMethod: "cash"|"stripe";
   status: 'delivered' | 'pending' | 'cancelled';
   name: string;
   phone: string;

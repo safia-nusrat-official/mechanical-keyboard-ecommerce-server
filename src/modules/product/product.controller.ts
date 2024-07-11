@@ -72,12 +72,15 @@ const deleteProduct = catchAsync(async (req: Request, res: Response) => {
   const productId = req.params.productId;
   const result = await productServices.deleteAProduct(productId);
 
-  sendResponse({
-    success: true,
-    message: 'Product deleted successfully!',
-    data: result,
-    statusCode:200
-  }, res);
+  sendResponse(
+    {
+      success: true,
+      message: 'Product deleted successfully!',
+      data: result,
+      statusCode: 200,
+    },
+    res,
+  );
 });
 export const productControllers = {
   createProduct,
