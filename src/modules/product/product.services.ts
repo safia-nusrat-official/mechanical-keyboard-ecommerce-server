@@ -1,3 +1,6 @@
+import httpStatus from 'http-status';
+import QueryBuilder from '../../app/builder/QueryBuilder';
+import AppError from '../../app/errors/AppError';
 import { TProduct, TUpdatedProduct } from './product.interface';
 import { Product } from './product.model';
 
@@ -7,31 +10,9 @@ const insertProductIntoDB = async (product: TProduct) => {
   return result;
 };
 
-const getAllProducts = async (searchQuery?: string):Promise<Array<TProduct>> => {
-  if (searchQuery) {
-    const searchQueryRegex = new RegExp(`${searchQuery}`);
-
-    // using aggregation and regex to search for the provided query across the necessary fields
-    const result = await Product.aggregate([
-      {
-        $unwind:"$variants" // destructuring the varaints array to operate on them separately
-      },
-      {
-        $match: {
-          $or: [
-            { description: { $regex: searchQueryRegex, $options: 'i' } },
-            { tags: { $elemMatch: { $regex: searchQueryRegex, $options: 'i' } } },
-            { category: { $regex: searchQueryRegex, $options: 'i' } },
-            { name: { $regex: searchQueryRegex, $options: 'i' } },
-            { "variants.type": { $regex: searchQueryRegex, $options: 'i' } },
-            { "variants.value": { $regex: searchQueryRegex, $options: 'i' } },
-          ],
-        },
-      }
-    ]);
-    return result;
-  }
-  const result = await Product.find({}); // returning all products if no search query is provided
+const getAllProducts = async (query: Record<string, any>) => {
+  const searchQuery = new QueryBuilder(Product.find({}), query).search(["brand", "title"]).filter().sort().fields()
+  const result = await searchQuery.modelQuery;
   return result;
 };
 
@@ -44,21 +25,29 @@ const updateProductInfo = async (
   productId: string,
   productInfo: TUpdatedProduct,
 ) => {
-  await Product.updateOne(
-    { _id: productId },
+  const productExists = await Product.findById(productId);
+  if (!productExists) {
+    throw new AppError(httpStatus.NOT_FOUND, 'Product not found.');
+  }
+  const result = await Product.findByIdAndUpdate(
+    productId,
     {
       $set: productInfo,
     },
+    {
+      new:true
+    }
   );
-  return getProductById(productId); // returning the product with updated field values
+
+  return result;
 };
 
 const deleteAProduct = async (productId: string) => {
-  const productAlreadyDeleted = await getProductById(productId);
+  const productAlreadyDeleted = await Product.findById(productId);
   if (!productAlreadyDeleted) {
-    throw new Error('Product has already been deleted.');
+    throw new AppError(404, 'Product not found.');
   }
-  const result = await Product.deleteOne({ _id: productId });
+  const result = await Product.findByIdAndDelete(productId);
   return result;
 };
 

@@ -27,7 +27,6 @@ productSchema.pre('save', async function (next) {
 productSchema.statics.reduceQuantity = async function (
   orderedProductId: string,
   orderedQuantity: number,
-  currentProductQuantity: number,
 ) {
   const updatedProductStock = await Product.findByIdAndUpdate(
     orderedProductId,

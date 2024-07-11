@@ -2,6 +2,8 @@ import express, { Application, NextFunction, Request, Response } from 'express';
 import cors from 'cors';
 import productRoutes from './modules/product/product.route';
 import { orderRoutes } from './modules/orders/order.routes';
+import { globalErrorHandler } from './app/middlewares/globalErrorHandlers';
+import { notFoundError } from './app/middlewares/notFoundErrorHandler';
 
 const app: Application = express();
 
@@ -12,22 +14,11 @@ app.use('/api/products', productRoutes);
 app.use('/api/orders', orderRoutes);
 
 app.get('/', (req: Request, res: Response) => {
-  res.send('Home page.');
+  res.send('Welcome to Key Wizards.');
 });
 
-app.all('*', (req, res) => {
-  res.status(404).json({
-    success: false,
-    message: 'Route not found',
-  });
-});
+// middlewares
+app.use(globalErrorHandler);
+app.use(notFoundError);
 
-app.use((error: any, req: Request, res: Response, next: NextFunction) => {
-  if (error) {
-    res.status(500).send({
-      success: false,
-      message: 'Something went wrong',
-    });
-  }
-});
 export default app;
