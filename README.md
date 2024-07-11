@@ -1,16 +1,23 @@
-# E-Commerce Backend Server
+# KeyWizards ⌨️
 
-A backend server for an e-commerce application built with Express, Typescript and Mongoose.
+An express-typescript-mongoose backend application for an e-commerce application exclusively for mecahnical keyboards featuring administritive controls like product and order CRUD operations along with efficient inventory managment logic and order processing.
 
-## Table of Contents
+[![Live Server Link](https://img.shields.io/badge/Live_Server_Link-blue)](https://meeting-room-booking-system-phi.vercel.app/)
 
-- [Features](#features)
-- [Prerequisites](#prerequisites)
-- [Installation](#installation)
-- [Configuration](#configuration)
-- [Running the Application](#running-the-application)
-- [Contact](#contact)
 
+## Table of Contents 📝
+
+- [**Features**](#features)
+- [**Getting Started**](#getting-started)
+  - [Prerequisites](#prerequisites)
+  - [Installation](#installation)
+  - [Configuration](#configuration)
+- [**Usage**](#usage)
+- [**API Endpoints**](#api-endpoints)
+- [**Project Structure**](#project-structure)
+- [**Technologies Used**](#technologies-used)
+- [**Contact**](#contact)
+  
 ## Features
 
 - Inventory management
@@ -20,58 +27,169 @@ A backend server for an e-commerce application built with Express, Typescript an
 - Retrieve orders by a specific email
 - Integration of MongoDB using Mongoose
 
-## Prerequisites
+## Getting Started 🚀
+### Prerequisites 📋
+Before you begin, please ensure you have the following dependencies installed:
+```bash
+Node.js (v20.11.0 or later)
+npm (v20.11.0 or later)
+```
+### Installation 🛠️
+1. Clone the repository:
+ ```bash
+ git clone https://github.com/safia-nusrat-official/mechanical-keyboard-ecommerce-server.git
+ ```
+2. Move to *mechanical-keyboard-ecommerce-server* :
+```bash
+cd meeting-room-booking-system
+```
+3. Install the depecdencies:
+```bash
+ npm install
+ ```
 
-Make sure you have the following installed on your system before you run this application locally:
+### Configuration ⚙️
+1. In the root directory of your project, create a .env file and add the following configuration variables:
+```env
+PORT=5000
+DB_URL=mongodb+srv://sattarabdussattar23:1RAiQp4Pr585Ryzm@learning-mongoose.3blupmm.mongodb.net/assignment-4?retryWrites=true&w=majority&appName=learning-mongoose
+NODE_ENV=development
+```
 
-- Node.js (>= 20.11.0)
-- Node Package Manager (>= 10.2.4)
-- Git (>=version 2.41.0)
+## Usage 📖
+1. To run the development server, hit:
+```bash
+npm run dev
+```
+Or, if you want to run the production server:
+```bash
+npm run build
+npm run start
+```
+Your server is running on [http://localhost:5000](http://localhost:5000) .
 
-## Installation
+## API Endpoints 🌐
+Here is a list of the API Endpoints:
+### Room Routes
+1. **Create a Product:**
+    - *Route:* **POST** `/api/products/`
+    - *Request Body:*
+```json
+   {
+    "title": "Premium Wooden Mechanical Keyboard",
+    "description": "Luxury meets performance with this wooden mechanical keyboard, equipped with Cherry MX Brown switches and a stunning wood finish.",
+    "price": 249.99,
+    "rating": 4.8,
+    "image": "https://example.com/images/wooden_keyboard.jpg",
+    "brand": "WoodType",
+    "availableQuantity": 5
+  }
+```
+  2. **Fetch a Product by Id:**
+     - *Route:* **GET** `/api/products/:productId`
+       
+  3. **Fetch all Products:**
+     - *Route:* **GET** `/api/products/`
+ 
+ _**N.B:** You can perform also search, filter, sort operations on the result via query parameters😋_
+ 
+ _Example: `/api/products?rating=5&searchTerm=WoodType&sort=price`_
+ 
+  4. **Update a Product:**
+      - *Route:* **PATCH** `/api/products/:productId`
+      - *Request Body:*
+```json
+  {
+    rating: 3.8
+  }
+```
 
-Follow the installation guide to run your application locally
+  5. **Delete a Product:**
+     - *Route:* **DELETE** `/api/products/:productId`
+    
+### Order Api Endpoints:
+1. **Create an Order:**
+    - *Route:* **POST** `/api/order/`
+    - *Request Body:*
+```json
+   {
+    "email": "john.doe@example.com",
+    "name": "John Doe",
+    "phone": "+1234567890",
+    "address": "123 Main St, Springfield, USA",
+    "paymentMethod": "cash",
+    "status": "delivered",
+    "productId": "668ffcc3462e10036f8bf5f8",
+    "price": 129.99,
+    "orderedQuantity": 23,
+    "date":"20-04-2026"
+  }
+```
+  2. **Fetch all Orders:**
+     - *Route:* **GET** `/api/orders`
 
-1. **Clone the repository**: 
-    [Click to copy the link](https://github.com/safia-nusrat-official/Mongoose-TS-Express-Application.git) .
-     Go to windows search, type 'cmd' and open cmd. In your cmd write the following command `git clone https://github.com/safia-nusrat-official/Mongoose-TS-Express-Application.git`
-   
-   ![CLone git repository in cmd](https://github.com/safia-nusrat-official/Mongoose-TS-Express-Application/assets/125960992/c8ad64ff-d292-4f25-b18a-309225e24a31)
+## Project Structure 📂
+This project follows Modular structure to ensure scalability, flexibility and maintainability, allowing easier management of code and better organization. Each module encapsulates a specific feature of the application, such as, room, booking and slot management. The main components of the project structure are:
+```
+meeting-room-booking-system/
+├── src/
+│   ├── app/
+│   |   ├── builder/
+│   |   |   ├── QueryBuilder.ts
+│   |   ├── config/
+│   |   |   ├── index.ts
+│   |   ├── errors/
+│   |   |   ├── AppError.ts
+│   |   |   ├── handleCastError.ts
+│   |   |   ├── handleDuplicateKeyError.ts
+│   |   |   ├── handleValidationError.ts
+│   |   |   ├── handleZodError.ts
+│   |   ├── interfaces/
+│   |   |   ├── errors.interface.ts
+│   |   ├── middlewares/
+│   |   |   ├── validateRequest.ts
+│   |   |   ├── globalErrorHandler.ts
+│   |   |   ├── notFoundErrorHandler.ts
+│   |   ├── utils/
+│   |   |   ├── catchAsync.ts
+│   |   |   ├── sendResponse.ts
+│   |   ├── modules/
+│   |   |   ├── products/
+│   |   |   |   ├── product.interface.ts
+│   |   |   |   ├── product.model.ts
+│   |   |   |   ├── product.constants.ts
+│   |   |   |   ├── product.validations.ts
+│   |   |   |   ├── products.controllers.ts
+│   |   |   |   ├── products.services.ts
+│   |   |   |   ├── products.routes.ts
+│   |   |   ├── orders/
+│   |   |   |   ├── order.interface.ts
+│   |   |   |   ├── order.model.ts
+│   |   |   |   ├── order.validations.ts
+│   |   |   |   ├── orders.controllers.ts
+│   |   |   |   ├── orders.services.ts
+│   |   |   |   ├── orders.routes.ts
+│   ├── app.ts
+│   ├── server.ts
+├── eslint.config.json
+├── .prettierrc.json
+├── .eslintignore
+├── .gitignore
+├── package.json
+├── package-lock.json
+├── tsconfig.json
+└── README.md
+```
 
+## Technologies Used 💻
+- Web-framework: **[Express.Js](https://expressjs.com/)**
+- Programming Language: **[Typescript](https://www.typescriptlang.org/)**
+- Object Data Modeling: **[Mongoose](https://mongoosejs.com/)**
+- Database: **[MongoDB](https://www.mongodb.com/)**
+- Validation Library: **[Zod](https://zod.dev/)**
+- Formatters: **[ESLint](https://eslint.org/)**, **[Prettier](https://prettier.io/)**
+  
+## Contact 📞
+For any enquires or issues related installation, please reach out to us at _safia.nusrat.official@gmail.com_. We welcome yor feedback and are here to guide you through your troubles and clean up any confusions. Thank you 😊!
 
-2. **Navigate to the project directory**: run `cd Mongoose-TS-Express-Application`
-   
-     ![image](https://github.com/safia-nusrat-official/Mongoose-TS-Express-Application/assets/125960992/d9478fab-ee13-4e88-9e72-e77450e1a80c)
-
-3. **Install dependencies**: run `npm install`
-   
-     ![image](https://github.com/safia-nusrat-official/Mongoose-TS-Express-Application/assets/125960992/5deabb08-f2be-421b-a7e4-b9ba66ce6f94)
-
-
-## Configuration
-Since this project uses environment files to store variables to connect to the database, you would need to set up the environ variables manually.
-**Setting Up Environment Variables** - You'll have to create a .env files in the root of your project directory and include the following values.
-   - Open file explorer and go to your project directory. Right click anywhere (except on the files) and select new and then Text Document. In simple words, create a text document.
-   - Make sure that show File Name Extensions in view > show is checked. 
-
-     ![image](https://github.com/safia-nusrat-official/Mongoose-TS-Express-Application/assets/125960992/3c3026d4-c6e8-41b9-ba05-a1c811e87758)
-   - Rename the file to .env including the extensions. A popup may open, click *Yes* . Make sure that this is how it looks:
-   
-     ![image](https://github.com/safia-nusrat-official/Mongoose-TS-Express-Application/assets/125960992/932923c7-fc27-4db1-a3e5-2ffae45ea515)
-
-  - Right click the `.env` file and open with notepad. Write as shown in the second image, exactly and save!
-
-    ![image](https://github.com/safia-nusrat-official/Mongoose-TS-Express-Application/assets/125960992/44b3dd1e-e64b-4a2f-96be-f46d8d516d30)
-
-    ![image](https://github.com/safia-nusrat-official/Mongoose-TS-Express-Application/assets/125960992/323dea50-fa95-45f6-a191-8738ccbc833d)
-
-## Running the Application
-   In the cmd run `npm run start` to run the application locally. Go to http://localhost:5000/ and your server is now running locally successfully! 🥳🎉
-   ![image](https://github.com/safia-nusrat-official/Mongoose-TS-Express-Application/assets/125960992/f842fbf1-8003-4f32-9dfb-1734a0ce34c2)
-
-*NB: It may require a bit time to connect to the server. Wait patiently.*   
-
-## Contact
-  If you encounter any problems during the environment variable set-up or face issues with installations of node or any other pre-requisites mentioned above, feel free to reach out: *safia.nusrat.official@gmail.com* .
-
-  - Safia Nusrat
+_[Safia Nusrat](https://github.com/safia-nusrat-official)_
