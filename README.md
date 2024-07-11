@@ -2,7 +2,7 @@
 
 An express-typescript-mongoose backend application for an e-commerce application exclusively for mecahnical keyboards featuring administritive controls like product and order CRUD operations along with efficient inventory managment logic and order processing.
 
-[![Live Server Link](https://img.shields.io/badge/Live_Server_Link-blue)](https://meeting-room-booking-system-phi.vercel.app/)
+[![Live Server Link](https://img.shields.io/badge/Live_Server_Link-blue)](https://mechanical-keyboard-ecommerce-server.vercel.app/)
 
 
 ## Table of Contents 📝
@@ -129,9 +129,9 @@ Here is a list of the API Endpoints:
      - *Route:* **GET** `/api/orders`
 
 ## Project Structure 📂
-This project follows Modular structure to ensure scalability, flexibility and maintainability, allowing easier management of code and better organization. Each module encapsulates a specific feature of the application, such as, room, booking and slot management. The main components of the project structure are:
+This project follows Modular structure to ensure scalability, flexibility and maintainability, allowing easier management of code and better organization. The main components of the project structure are:
 ```
-meeting-room-booking-system/
+mechanical-keyboard-ecommerce-server/
 ├── src/
 │   ├── app/
 │   |   ├── builder/
@@ -157,7 +157,6 @@ meeting-room-booking-system/
 │   |   |   ├── products/
 │   |   |   |   ├── product.interface.ts
 │   |   |   |   ├── product.model.ts
-│   |   |   |   ├── product.constants.ts
 │   |   |   |   ├── product.validations.ts
 │   |   |   |   ├── products.controllers.ts
 │   |   |   |   ├── products.services.ts
