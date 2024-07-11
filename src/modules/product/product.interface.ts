@@ -1,23 +1,13 @@
 import { Model } from 'mongoose';
 
-export type TInventory = {
-  quantity: number;
-  inStock: boolean;
-};
-
-export type TVariants = {
-  type: string;
-  value: string;
-};
-
 export interface TProduct {
-  name: string;
+  title: string;
+  image:string;
   description: string;
   price: number;
-  category: string;
-  tags: string[];
-  variants: TVariants[];
-  inventory: TInventory;
+  rating: number;
+  brand: string;
+  availableQuantity: number;
 }
 
 export interface TProductModel extends Model<TProduct> {

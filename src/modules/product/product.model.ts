@@ -1,56 +1,42 @@
 import mongoose from 'mongoose';
 import {
   TProduct,
-  TInventory,
-  TVariants,
   TProductModel,
 } from './product.interface';
 
-const inventorySchema = new mongoose.Schema<TInventory>({
-  quantity: Number,
-  inStock: Boolean,
-});
-const variantsSchema = new mongoose.Schema<TVariants>({
-  type: String,
-  value: String,
-});
-
-const productSchema = new mongoose.Schema<
-  TProduct,
-  TProductModel
->({
-  name: { type: String },
-  description: String,
-  price: Number,
-  category: String,
-  tags: [String],
-  variants: [variantsSchema],
-  inventory: inventorySchema,
+const productSchema = new mongoose.Schema<TProduct, TProductModel>({
+  title: { type: String, required: true },
+  description: { type: String, required: true },
+  price: { type: Number, required: true },
+  rating: { type: Number, required: true },
+  image: { type: String, required: true },
+  brand: { type: String, required: true },
+  availableQuantity: { type: Number, required: true },
 });
 
 // Makes sure the product doesnot exist in the db already before a product is inserted.
 productSchema.pre('save', async function (next) {
-  const result = await Product.findOne({ name: this.name });
-  if(result){
-    throw new Error(`Product named ${this.name} already exists!`)
+  const result = await Product.findOne({ title: this.title });
+  if (result) {
+    throw new Error(`Product name ${this.title} already exists!`);
   }
   next();
 });
 
 // a custom instance method to reduce the quantity and change inStock status based on the ordered quantities of the product
 productSchema.statics.reduceQuantity = async function (
-  orderedProductId:string,
+  orderedProductId: string,
   orderedQuantity: number,
-  currentProductQuantity: number
+  currentProductQuantity: number,
 ) {
-  const updatedProductStock = await Product.findByIdAndUpdate(orderedProductId, {
-    $inc:{
-      'inventory.quantity':-orderedQuantity
+  const updatedProductStock = await Product.findByIdAndUpdate(
+    orderedProductId,
+    {
+      $inc: {
+        'availableQuantity': -orderedQuantity,
+      },
     },
-    $set:{
-      'inventory.inStock': orderedQuantity < currentProductQuantity
-    }
-  })
+  );
   return updatedProductStock;
 };
 
