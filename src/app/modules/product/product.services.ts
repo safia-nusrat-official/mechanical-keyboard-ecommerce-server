@@ -1,17 +1,23 @@
 import httpStatus from 'http-status';
-import QueryBuilder from '../../app/builder/QueryBuilder';
-import AppError from '../../app/errors/AppError';
 import { TProduct, TUpdatedProduct } from './product.interface';
 import { Product } from './product.model';
+import QueryBuilder from '../../builder/QueryBuilder';
+import AppError from '../../errors/AppError';
 
 const insertProductIntoDB = async (product: TProduct) => {
-  const newProduct = new Product(product) // inserting a product in db by creating instance of Product Model
+  const newProduct = new Product(product); // inserting a product in db by creating instance of Product Model
   const result = await newProduct.save(); // triggers a pre-hook to check if any product with the same name as the product's already exists
   return result;
 };
 
 const getAllProducts = async (query: Record<string, any>) => {
-  const searchQuery = new QueryBuilder(Product.find({}), query).search(["brand", "title"]).filter().sort().fields()
+  const searchQuery = new QueryBuilder(Product.find({}), query)
+    .search(['brand', 'title'])
+    .filter()
+    .sort()
+    .paginate()
+    .fields();
+
   const result = await searchQuery.modelQuery;
   return result;
 };
@@ -35,8 +41,8 @@ const updateProductInfo = async (
       $set: productInfo,
     },
     {
-      new:true
-    }
+      new: true,
+    },
   );
 
   return result;
@@ -50,6 +56,10 @@ const deleteAProduct = async (productId: string) => {
   const result = await Product.findByIdAndDelete(productId);
   return result;
 };
+const getProductsCount = async() => {
+  const result = await Product.estimatedDocumentCount()
+  return result
+}
 
 export const productServices = {
   insertProductIntoDB,
@@ -57,4 +67,5 @@ export const productServices = {
   getProductById,
   updateProductInfo,
   deleteAProduct,
+  getProductsCount
 };

@@ -25,8 +25,11 @@ export const orderValidation = z.object({
     phone: z.string(),
     address: z.string(),
     email: emailValidation,
-    productId: z.string(),
-    price: z.number(),
-    orderedQuantity: z.number(),
+    orderedProducts: z.array(z.object({
+        productId: z.string(),
+        orderedQuantity:z.number()
+    })),
+    totalPrice: z.number(),
+    totalOrderedQuantity: z.number(),
   }),
 }).required();

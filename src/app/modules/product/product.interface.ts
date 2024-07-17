@@ -2,7 +2,7 @@ import { Model } from 'mongoose';
 
 export interface TProduct {
   title: string;
-  image:string;
+  images: string[];
   description: string;
   price: number;
   rating: number;
@@ -21,7 +21,7 @@ export interface TProductModel extends Model<TProduct> {
 // interfaces for product data to be updated
 export interface TUpdatedProduct {
   title?: string;
-  image?:string;
+  images?: string[];
   description?: string;
   price?: number;
   rating?: number;

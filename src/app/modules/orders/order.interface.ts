@@ -1,18 +1,22 @@
 import { Model, Types } from 'mongoose';
 
-export interface TOrder {
+export type TOrderedProduct = {
+  productId: Types.ObjectId;
+  orderedQuantity: number;
+};
+export interface IOrder {
   date: string;
-  paymentMethod: "cash"|"stripe";
+  paymentMethod: 'cash' | 'stripe';
   status: 'delivered' | 'pending' | 'cancelled';
   name: string;
   phone: string;
   address: string;
   email: string;
-  productId: Types.ObjectId;
-  price: number;
-  orderedQuantity: number;
+  orderedProducts: TOrderedProduct[];
+  totalPrice: number;
+  totalOrderedQuantity: number;
 }
 
 export interface TOrderMethods {}
 
-export type TOrderModel = Model<TOrder, {}, TOrderMethods>;
+export type TOrderModel = Model<IOrder, {}, TOrderMethods>;

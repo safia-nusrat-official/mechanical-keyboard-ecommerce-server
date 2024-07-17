@@ -1,0 +1,112 @@
+[
+  {
+    "title": "Ultimate Typist Mechanical Keyboard",
+    "description": "The Ultimate Typist features premium Cherry MX Brown switches for a perfect blend of tactile feedback and smooth keystrokes.",
+    "price": 129.99,
+    "rating": 4.7,
+    "images": [
+      "https://mechanicalkeyboards.com/cdn/shop/files/17531-X2RE8-Keychron-Q1-Max-w-Knob-Carbon-Black.jpg?v=1708705757&width=550"
+    ],
+    "brand": "TypistPro",
+    "availableQuantity": 25
+  },
+  {
+    "title": "Gaming Beast RGB Keyboard",
+    "description": "The Gaming Beast offers RGB lighting, Cherry MX Red switches, and a robust build for the ultimate gaming experience.",
+    "price": 159.99,
+    "rating": 4.8,
+    "images": [
+      "https://m.media-amazon.com/images/I/71nRfZNacyL._AC_UF894,1000_QL80_.jpg"
+    ],
+    "brand": "GamerTech",
+    "availableQuantity": 30
+  },
+  {
+    "title": "QuietPro Silent Mechanical Keyboard",
+    "description": "Experience the QuietPro with Cherry MX Silent Red switches for a noise-free typing experience without compromising on performance.",
+    "price": 139.99,
+    "rating": 4.5,
+    "images": [
+      "https://images.anandtech.com/doci/14309/50_625453c45de96ca1004c642d1a05aefd_1554322993_678x452.jpg"
+    ],
+    "brand": "SilenceMaster",
+    "availableQuantity": 20
+  },
+  {
+    "title": "RGB Tactile Mechanical Keyboard",
+    "description": "Enhance your setup with the RGB Tactile keyboard featuring customizable RGB lighting and tactile feedback from Cherry MX Blue switches.",
+    "price": 149.99,
+    "rating": 4.6,
+    "images": [
+      "https://static.wixstatic.com/media/8517ed_fd3be655db9643d89289d29e3f360238~mv2.png/v1/fill/w_596,h_326,al_c,q_85,usm_0.66_1.00_0.01,enc_auto/Phantom87_02%20-%201.png"
+    ],
+    "brand": "LightFX",
+    "availableQuantity": 15
+  },
+  {
+    "title": "Ergo Mechanical Keyboard",
+    "description": "The Ergo Mechanical Keyboard offers a split ergonomic design with Cherry MX Brown switches for comfortable, long typing sessions.",
+    "price": 199.99,
+    "rating": 4.9,
+    "images": [
+      "https://www.ponoko.com/blog/wp-content/uploads/2018/01/Ergonomic-Mechanical-Keyboard-3-Profet-Atreus-1024x680.jpg"
+    ],
+    "brand": "ErgoTech",
+    "availableQuantity": 10
+  },
+  {
+    "title": "Compact 60% Mechanical Keyboard",
+    "description": "Compact and portable, this 60% keyboard with Cherry MX Red switches is perfect for minimalist setups and on-the-go use.",
+    "price": 109.99,
+    "rating": 4.4,
+    "images": [
+      "https://www.ubuy.com.bd/productimg/?image=aHR0cHM6Ly9tLm1lZGlhLWFtYXpvbi5jb20vaW1hZ2VzL0kvNjEzVThQNGhYOEwuX0FDX1NMMTUwMF8uanBn.jpg"
+    ],
+    "brand": "MiniType",
+    "availableQuantity": 50
+  },
+  {
+    "title": "Wireless Mechanical Keyboard",
+    "description": "Enjoy the freedom of wireless connectivity with this mechanical keyboard, featuring Cherry MX Brown switches and long battery life.",
+    "price": 169.99,
+    "rating": 4.7,
+    "images": [
+      "https://www.jbhifi.com.au/cdn/shop/products/609531-Product-0-I-638145569599312563.jpg?v=1678920625"
+    ],
+    "brand": "FreeType",
+    "availableQuantity": 18
+  },
+  {
+    "title": "Customizable Mechanical Keyboard",
+    "description": "Create your perfect keyboard with customizable keycaps, RGB lighting, and Cherry MX Blue switches for a unique typing experience.",
+    "price": 179.99,
+    "rating": 4.6,
+    "images": [
+      "https://www.ryans.com/storage/products/main/pc-power-k87-rgb-white-wired-gaming-11708428628.webp"
+    ],
+    "brand": "BuildYourBoard",
+    "availableQuantity": 22
+  },
+  {
+    "title": "Budget Mechanical Keyboard",
+    "description": "Get the mechanical keyboard experience without breaking the bank. Features Cherry MX Black switches for a firm, consistent feel.",
+    "price": 79.99,
+    "rating": 4.3,
+    "images": [
+      "https://vibegaming.com.bd/wp-content/uploads/2023/05/Untitled-1-7-1.jpg"
+    ],
+    "brand": "ValueKey",
+    "availableQuantity": 100
+  },
+  {
+    "title": "Premium Wooden Mechanical Keyboard",
+    "description": "Luxury meets performance with this wooden mechanical keyboard, equipped with Cherry MX Brown switches and a stunning wood finish.",
+    "price": 249.99,
+    "rating": 4.8,
+    "images": [
+      "https://i5.walmartimages.com/asr/b5e070b0-5fd5-43ea-97b7-655522b727aa.291daa47273b8d3df726144e3a5655c5.jpeg"
+    ],
+    "brand": "WoodType",
+    "availableQuantity": 5
+  }
+]

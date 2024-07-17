@@ -1,12 +1,7 @@
 import { Request, Response } from 'express';
 import { productServices } from './product.services';
-import {
-  createProductValidation,
-  updateProductValidation,
-} from './product.validation';
-import { TProduct, TUpdatedProduct } from './product.interface';
-import { catchAsync } from '../../app/utils/catchAsync';
-import { sendResponse } from '../../app/utils/sendResponse';
+import { catchAsync } from '../../utils/catchAsync';
+import { sendResponse } from '../../utils/sendResponse';
 
 const createProduct = catchAsync(async (req: Request, res: Response) => {
   const result = await productServices.insertProductIntoDB(req.body);
@@ -82,9 +77,23 @@ const deleteProduct = catchAsync(async (req: Request, res: Response) => {
     res,
   );
 });
+const getProductsCount = catchAsync(async(req, res) => {
+  const result = await productServices.getProductsCount();
+
+  sendResponse(
+    {
+      success: true,
+      message: 'Total products count fetched successfully!',
+      data: result,
+      statusCode: 200,
+    },
+    res,
+  );
+})
 export const productControllers = {
   createProduct,
   getAllProducts,
+  getProductsCount,
   getProductById,
   deleteProduct,
   updateProductInfo,
