@@ -13,7 +13,11 @@ const stripe = new Stripe(config.stripe_secret_key as string);
 app.use(express.json());
 app.use(
   cors({
-    origin: ['http://localhost:5173', 'http://localhost:5174'],
+    origin: [
+      'http://localhost:5173',
+      'http://localhost:5174',
+      'https://mechanical-keyboard-ecommerce-client.vercel.app',
+    ],
   }),
 );
 
@@ -30,7 +34,7 @@ app.post('/api/create-payment-intent', async (req, res) => {
   const { totalPrice } = req.body;
   const amount = Number(totalPrice) * 100;
   console.log(amount);
-  // Create a PaymentIntent with the order amount and currency
+  // Creating a PaymentIntent with the order amount and currency
   const paymentIntent = await stripe.paymentIntents.create({
     amount,
     currency: 'usd',
