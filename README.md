@@ -41,7 +41,7 @@ npm (v20.11.0 or later)
  ```
 2. Move to *mechanical-keyboard-ecommerce-server* :
 ```bash
-cd meeting-room-booking-system
+cd mechanical-keyboard-ecommerce-server
 ```
 3. Install the depecdencies:
 ```bash
